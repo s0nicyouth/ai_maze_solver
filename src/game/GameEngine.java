@@ -1,7 +1,6 @@
 package game;
 
 import org.joml.Vector2d;
-import org.joml.Vector2i;
 import renderer.Engine;
 import utils.ImageUtils;
 
@@ -11,12 +10,13 @@ import java.awt.image.BufferedImage;
 
 public class GameEngine implements Engine {
 
-    private BufferedImage mImage = ImageUtils.readImage("resources/map.png");
+    private BufferedImage mImage;
     private Player mPlayer;
     private CommandProcessor mCommandProcessor = new SimpleCommandProcessor();
 
-    public GameEngine(Player player) {
+    public GameEngine(Player player, BufferedImage level) {
         mPlayer = player;
+        mImage = level;
     }
 
     private Vector2d commandToVector(CommandProcessor.Command command) {

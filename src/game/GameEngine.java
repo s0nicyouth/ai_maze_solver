@@ -37,8 +37,7 @@ public class GameEngine implements Engine {
     @Override
     public void tick(Canvas canvas, long delta) {
         Vector2d dir = commandToVector(mCommandProcessor.getCommand());
-        System.out.println(delta / 100000000d);
-        mPlayer.move(dir.mul(delta / 100000000d));
+        mPlayer.move(dir.mul(delta * 0.00000005));
         Vector2d playerPosition = mPlayer.getPosition();
         if (playerPosition.x >= 0 &&
                 playerPosition.y >= 0 &&
@@ -47,7 +46,7 @@ public class GameEngine implements Engine {
             int pixelAtPlayer = mImage.getRGB((int) playerPosition.x, (int) playerPosition.y);
             if (pixelAtPlayer == -1) {
                 // Collision detected
-                System.out.println("Collision!");
+                //System.out.println("Collision!");
             }
         }
     }

@@ -1,22 +1,23 @@
 package game;
 
+import org.joml.Vector2d;
 import org.joml.Vector2i;
 
 public class PlayerImpl implements Player {
 
-    private Vector2i mPosition;
+    private Vector2d mPosition;
 
-    public PlayerImpl(Vector2i initialPos) {
+    public PlayerImpl(Vector2d initialPos) {
         mPosition = initialPos;
     }
 
     @Override
-    public void move(Vector2i dir) {
+    public void move(Vector2d dir) {
         mPosition.add(dir);
     }
 
     @Override
-    public Vector2i getPosition() {
+    public Vector2d getPosition() {
         return mPosition;
     }
 }

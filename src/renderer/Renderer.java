@@ -21,7 +21,9 @@ public class Renderer {
 
         mExecutor.execute(() -> {
             while (!mEnd.get()) {
-                mEngine.tick(mDisplay.getCanvas(),System.nanoTime() - mLastTick);
+                long newTime = System.nanoTime();
+                mEngine.tick(mDisplay.getCanvas(),newTime - mLastTick);
+                mLastTick = newTime;
                 mEngine.render(mDisplay.getCanvas());
                 try {
                     // Dirty hack to avoid flickering

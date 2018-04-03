@@ -1,8 +1,8 @@
 package game;
 
-import org.joml.Vector2i;
+import org.joml.Vector2d;
 
 public interface Player {
-    void move(Vector2i dir);
-    Vector2i getPosition();
+    void move(Vector2d dir);
+    Vector2d getPosition();
 }

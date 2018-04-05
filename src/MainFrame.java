@@ -24,12 +24,31 @@ public class MainFrame {
         Display disp = new Display();
         Engine engine = new GameEngine(new PlayerImpl(playerStart), level);
 
-        Renderer render = new Renderer(engine, disp);
+        new Renderer(engine, disp);
 
         Classifier cls = new Classifier();
 
         Pair<RealMatrix, RealVector> data = Misc.readIrisData("resources/iris.data");
 
-        cls.fit(data.getFirst(), data.getSecond());
+        RealMatrix train = new Array2DRowRealMatrix((int) Math.ceil(data.getFirst().getRowDimension() / 2), data.getFirst().getColumnDimension());
+        RealVector trainY = new ArrayRealVector((int) Math.ceil(data.getSecond().getDimension() / 2));
+        for (int i = 0, j = 0; i < data.getFirst().getRowDimension(); i++) {
+            if (i % 2 == 0) {
+                train.setRow(j, data.getFirst().getRow(i));
+                trainY.setEntry(j, data.getSecond().getEntry(i));
+                j++;
+            }
+        }
+
+        cls.fit(train, trainY);
+
+        int guessed = 0;
+        for (int i = 0; i < data.getFirst().getRowDimension(); i++) {
+            double predict = cls.predict(data.getFirst().getRowVector(i));
+            if (predict == data.getSecond().getEntry(i))
+                guessed++;
+        }
+
+        System.out.println("Accuracy: " + (double) guessed / data.getSecond().getDimension());
     }
 }

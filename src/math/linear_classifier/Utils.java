@@ -41,8 +41,8 @@ public class Utils {
         return computeQualityFunction(objects, answers, weights, gap -> Math.exp(-1 * gap));
     }
 
-    public RealVector gradientDescentExponentialFunction(RealMatrix objects, RealVector answers) {
-        return gradientDescentExponentialFunction(objects, answers, 0.05);
+    public static RealVector gradientDescentExponentialFunction(RealMatrix objects, RealVector answers) {
+        return gradientDescentExponentialFunction(objects, answers, 0.5);
     }
 
     public static RealVector gradientDescentExponentialFunction(RealMatrix objects, RealVector answers, double step) {
@@ -68,8 +68,12 @@ public class Utils {
                 grad.setEntry(wN, gradElem);
             }
 
-            weights = weights.subtract(grad.mapMultiply(step));
-            System.out.println(computeExponentialQualityFunction(objects, answers, weights));
+            RealVector normGrad = grad.mapDivide(grad.getNorm());
+            weights = weights.subtract(normGrad.mapMultiply(step));
+            double error = computeExponentialQualityFunction(objects, answers, weights);
+            System.out.println(error);
+            if (error < 0.5)
+                return weights;
         }
     }
 }

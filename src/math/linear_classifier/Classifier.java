@@ -1,6 +1,5 @@
 package math.linear_classifier;
 
-import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
@@ -15,6 +14,10 @@ public class Classifier {
 
 
 
-        Utils.gradientDescentExponentialFunction(objects, answers, 0.00001);
+        mWeights = Utils.gradientDescentExponentialFunction(objects, answers);
+    }
+
+    public double predict(RealVector object) {
+        return Math.signum(Utils.computeAnswer(mWeights, object));
     }
 }
